@@ -1,7 +1,8 @@
 #include <iostream>
 using namespace std;
 
-int value(char roman) {
+// Converting Roman numerals into integers
+int value(char roman) { 
     switch(roman) {
     case 'I':return 1;
     case 'V':return 5;
@@ -11,28 +12,18 @@ int value(char roman) {
     }
 return 0;
 }
-int RomanToInt(string A)
- {
+int RomanToInt(string A)  {
     int i,l, ans=0,p=0;
     string valid;
     l=A.length();
+    // Checking the validity of Roman numerals
     for (i=0;i<l;i++) {
-        if (value(A[i]) == 0) {
-            valid = "no";
-        }
-        if ((A[i] == A[i+1]) && (A[i] == A[i+2]) && (A[i] == A[i+3]) && (A[i] == 'X' )) {
-            valid = "no";
-        }
-        if ((A[i] == A[i+1]) && (A[i] == A[i+2]) && (A[i] == A[i+3]) && (A[i] == 'I')) {
-            valid = "no";
-        }
-        if (A[i] == 'V' && A[i+1] == 'V') {
-            valid = "no";
-        }
-        if (A[i] == 'L' && A[i+1] == 'L') {
-            valid = "no";
-        }
-        if (A[i] == 'C' && A[i+1] == 'C') {
+        if ( (value(A[i]) == 0) 
+        || ((A[i] == A[i+1]) && (A[i] == A[i+2]) && (A[i] == A[i+3]) && (A[i] == 'X'))
+        || ((A[i] == A[i+1]) && (A[i] == A[i+2]) && (A[i] == A[i+3]) && (A[i] == 'I')) 
+        || (A[i] == 'V' && A[i+1] == 'V') 
+        || (A[i] == 'L' && A[i+1] == 'L') 
+        || (A[i] == 'C' && A[i+1] == 'C')) {
             valid = "no";
         }
     }
@@ -43,15 +34,13 @@ int RomanToInt(string A)
         else ans=ans-value(A[i]);
        p=value(A[i]);
     }} else {
-        
         ans = 0;
     }
-    
        return ans;
 }
 
-string intToRoman(int n)
-{
+// Converting integers into Roman numerals 
+string intToRoman(int n) {
         string romans[] = {"C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
         int values[] = {100, 90, 50, 40, 10, 9, 5, 4, 1};
         string result = "";
@@ -64,49 +53,46 @@ string intToRoman(int n)
         return result;
 }
 
-int main()
- {
+// Calculator
+int main() {
         string s,m,ope;
         int answer;
-        cout<<"please enter first roman number: ";
+        cout<<"Please enter first Roman numeral: ";
         cin>>s;
+        // Asking user to enter Roman numeral until it is correct
         while(RomanToInt(s) == 0) {
-            cout<<"This number is incorrect, please enter again: ";
+            cout<<"This numeral is incorrect, please enter again: ";
             cin>>s;
         }
         answer = RomanToInt(s);
-        while ( (ope != "exit") && (m != "exit") ) {
-            cout<<"please enter operator: ";
+        while (true) {
+            cout<<"Please enter operator: ";
             cin>>ope;
+            // Calculate the results until user types "exit"
             if (ope != "exit") {
-                cout<<"please enter next roman number: ";
+                cout<<"Please enter next Roman numeral: ";
                 cin>>m;
                 if (m != "exit") {
-                while(RomanToInt(m) == 0) {
-                    cout<<"This number is incorrect, please enter again: ";
+                    while(RomanToInt(m) == 0) {
+                    cout<<"This numeral is incorrect, please enter again: ";
                     cin>>m;
                     }
-                }
-            }
-            if (ope != "exit" && m != "exit") {
                 if(ope == "+") {
                     answer=answer+RomanToInt(m);
-
-                }
-                if(ope == "-") {
+                } else if (ope == "-") {
                     answer=answer-RomanToInt(m);
-
-                }
-                if(ope == "*") {
+                } else if(ope == "*") {
                    answer=answer*RomanToInt(m);
-
-                }
-                if(ope == "/") {
+                } else if(ope == "/") {
                     answer=answer/RomanToInt(m);
-
                 }
+                } else {
+                    break;
+                }
+            } else {
+                break;
             }
-            }
-                cout<<intToRoman(answer)<<"\n";
-                return 0;
         }
+             cout<<intToRoman(answer)<<"\n";
+             return 0;
+}
